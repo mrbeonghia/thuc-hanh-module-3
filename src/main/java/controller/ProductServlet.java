@@ -19,13 +19,12 @@ import java.util.List;
 
 @WebServlet(urlPatterns = "/product")
 public class ProductServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     private ProductDAO productDAO;
     private CategoryDAO categoryDAO;
-    @Override
-    public void init() throws ServletException {
-        productDAO  = new ProductDAO();
-        categoryDAO = new CategoryDAO();
 
+    public void init(){
+        productDAO = new ProductDAO();
     }
 
     @Override
@@ -154,6 +153,11 @@ public class ProductServlet extends HttpServlet {
         dispatcher.forward(request,response);
     }
 
-    private void searchProduct(HttpServletRequest request, HttpServletResponse response) {
+    private void searchProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("name");
+        List<Product> listProduct = (List<Product>) productDAO.getProductByName(name);
+        request.setAttribute("search", listProduct);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("search.jsp");
+        requestDispatcher.forward(request, response);
     }
 }
