@@ -100,7 +100,7 @@ public class ProductServlet extends HttpServlet {
         Product product = new Product(name,price,quantity,color,description,categoryId);
         productDAO.updateProduct(product);
         request.setAttribute("message","success");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("app/edit.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("edit.jsp");
         dispatcher.forward(request,response);
 
     }
